@@ -3,12 +3,11 @@ import { useInView } from "react-intersection-observer";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, MapPin, Phone, Calendar } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin } from "lucide-react";
 
 const contactInfo = [
   {
