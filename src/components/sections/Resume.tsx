@@ -10,6 +10,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Download, Calendar, MapPin } from "lucide-react";
+import epcLogo from "@/imgs/icons/epc.jpg";
+import qvcLogo from "@/imgs/icons/qvc.png";
+import upsLogo from "@/imgs/icons/ups.png";
+import phillyPretzelLogo from "@/imgs/icons/philly_pretzel_factory.png";
+
 
 const workExperience = [
   {
@@ -19,7 +24,7 @@ const workExperience = [
     location: "Bethlehem, PA",
     startDate: "Jun 2023",
     endDate: "Sep 2023",
-    logo: "src/imgs/icons/epc.jpg",
+    logo: epcLogo,
     description:
       "ITAD Technician specializing in secure data destruction, hardware diagnostics, and asset auditing.",
     responsibilities: [
@@ -39,7 +44,7 @@ const workExperience = [
     location: "Bethlehem, PA",
     startDate: "Jun 2022",
     endDate: "Sep 2022",
-    logo: "src/imgs/icons/qvc.png",
+    logo: qvcLogo,
     description:
       "Inbound Warehouse Associate specializing in receiving, sorting, and processing freight using RF scanners and manual pallet jacks.",
     responsibilities: [
@@ -59,7 +64,7 @@ const workExperience = [
     location: "Nazareth, PA",
     startDate: "May 2021",
     endDate: "Jun 2022",
-    logo: "src/imgs/icons/ups.png",
+    logo: upsLogo,
     description:
       "Package Handler proficient in high-volume unloading and complex, high-speed sorting logic.",
     responsibilities: [
@@ -78,7 +83,7 @@ const workExperience = [
     location: "Nazareth, PA",
     startDate: "May 2021",
     endDate: "Jun 2022",
-    logo: "src/imgs/icons/philly_pretzel_factory.png",
+    logo: phillyPretzelLogo,
     description:
       "Baker and Team Member skilled in high-volume dough production, POS operation, and direct customer service.",
     responsibilities: [

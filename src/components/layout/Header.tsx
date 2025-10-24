@@ -54,11 +54,14 @@ export default function Header() {
   }, []);
 
   const scrollToSection = (href: string) => {
+    console.log("Scrolling to:", href); // Debug log
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       // Close mobile menu after navigation
       setIsMobileMenuOpen(false);
+    } else {
+      console.log("Element not found:", href); // Debug log
     }
   };
 
@@ -133,16 +136,25 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-full h-full">
-                <div className="flex flex-col items-center justify-center h-full space-y-8">
+                <div
+                  className="flex flex-col items-center justify-center h-full space-y-8"
+                  style={{ pointerEvents: "auto" }}
+                >
                   {navItems.map((item) => (
                     <button
                       key={item.name}
-                      onClick={() => scrollToSection(item.href)}
-                      className={`text-center text-xl font-medium transition-all duration-200 hover:text-primary cursor-pointer relative ${
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log("Button clicked:", item.name); // Debug log
+                        scrollToSection(item.href);
+                      }}
+                      className={`text-center text-xl font-medium transition-all duration-200 hover:text-primary cursor-pointer relative px-4 py-2 rounded-md hover:bg-muted/50 ${
                         activeSection === item.href.substring(1)
                           ? "text-primary font-bold"
                           : "text-foreground"
                       }`}
+                      style={{ pointerEvents: "auto" }}
                     >
                       {item.name}
                       {activeSection === item.href.substring(1) && (
