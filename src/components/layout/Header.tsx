@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -20,7 +19,8 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Update active section based on scroll position
+      setIsMobileMenuOpen(false);
+
       const sections = navItems.map((item) => item.href.substring(1));
       let currentSection = sections[0]; // Default to first section
 
@@ -28,7 +28,6 @@ export default function Header() {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Check if the section is in view (top of element is above the middle of viewport)
           if (
             rect.top <= window.innerHeight / 2 &&
             rect.bottom >= window.innerHeight / 2
@@ -36,7 +35,6 @@ export default function Header() {
             currentSection = section;
             break;
           }
-          // If we're past this section and haven't found a better match, use it
           if (rect.top <= 100) {
             currentSection = section;
           }
@@ -46,12 +44,38 @@ export default function Header() {
       setActiveSection(currentSection);
     };
 
-    // Initial check
     handleScroll();
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobileMenuOpen) {
+        const target = event.target as Element;
+        const mobileMenu = document.querySelector("[data-mobile-menu]");
+        const hamburgerButton = document.querySelector(
+          "[data-hamburger-button]"
+        );
+
+        if (
+          mobileMenu &&
+          !mobileMenu.contains(target) &&
+          hamburgerButton &&
+          !hamburgerButton.contains(target)
+        ) {
+          setIsMobileMenuOpen(false);
+        }
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isMobileMenuOpen]);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -138,52 +162,76 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Mobile Navigation */}
-          <div className="md:hidden">
-            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-full h-full">
-                <div
-                  className="flex flex-col items-center justify-center h-full space-y-8"
-                  style={{ pointerEvents: "auto" }}
+          {/* Mobile Navigation - Horizontal Accordion */}
+          <div className="md:hidden relative">
+            {/* Hamburger Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="relative z-10"
+              data-hamburger-button
+            >
+              <motion.div
+                animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </motion.div>
+            </Button>
+
+            {/* Horizontal Accordion Menu */}
+            <AnimatePresence>
+              {isMobileMenuOpen && (
+                <motion.div
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: "auto", opacity: 1 }}
+                  exit={{ width: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="absolute right-0 top-0 bg-background/95 backdrop-blur-md border border-border rounded-lg shadow-lg overflow-hidden"
+                  style={{ zIndex: 5 }}
+                  data-mobile-menu
                 >
-                  {navItems.map((item) => (
-                    <button
-                      key={item.name}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        scrollToSection(item.href);
-                      }}
-                      className={`text-center text-xl font-medium transition-all duration-200 hover:text-primary cursor-pointer relative px-4 py-2 rounded-md hover:bg-muted/50 ${
-                        activeSection === item.href.substring(1)
-                          ? "text-primary font-bold"
-                          : "text-foreground"
-                      }`}
-                      style={{ pointerEvents: "auto" }}
-                    >
-                      {item.name}
-                      {activeSection === item.href.substring(1) && (
-                        <motion.div
-                          layoutId="activeTabMobile"
-                          className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full"
-                          initial={false}
-                          transition={{
-                            type: "spring",
-                            stiffness: 500,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </SheetContent>
-            </Sheet>
+                  <nav className="flex items-center space-x-1 p-2">
+                    {navItems.map((item, index) => (
+                      <motion.div
+                        key={item.name}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <button
+                          onClick={() => scrollToSection(item.href)}
+                          className={`text-xs font-medium transition-all duration-200 hover:text-primary cursor-pointer relative whitespace-nowrap px-3 py-2 rounded-md hover:bg-muted/50 ${
+                            activeSection === item.href.substring(1)
+                              ? "text-primary font-bold bg-muted/30"
+                              : "text-foreground/80"
+                          }`}
+                        >
+                          {item.name}
+                          {activeSection === item.href.substring(1) && (
+                            <motion.div
+                              layoutId="activeTabMobile"
+                              className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"
+                              initial={false}
+                              transition={{
+                                type: "spring",
+                                stiffness: 500,
+                                damping: 30,
+                              }}
+                            />
+                          )}
+                        </button>
+                      </motion.div>
+                    ))}
+                  </nav>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
