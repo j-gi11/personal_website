@@ -15,7 +15,6 @@ import qvcLogo from "@/imgs/icons/qvc.png";
 import upsLogo from "@/imgs/icons/ups.png";
 import phillyPretzelLogo from "@/imgs/icons/philly_pretzel_factory.png";
 
-
 const workExperience = [
   {
     id: "1",
@@ -132,7 +131,7 @@ export default function Resume() {
             className="text-center mb-12"
           >
             <Button size="lg" className="text-base px-8 py-3" asChild>
-              <a href="public/resume.pdf" target="_blank">
+              <a href="/personal_website/resume.pdf" target="_blank">
                 <Download className="mr-2 h-5 w-5" />
                 Download Resume (PDF)
               </a>
