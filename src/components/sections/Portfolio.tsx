@@ -17,7 +17,7 @@ const projects = [
       To ensure the entire system is robust and maintainable, I also implemented an Over-the-Air (OTA) update system, allowing me to deploy new firmware to all sensor modules remotely. This is complemented by a remote logging solution that enables real-time monitoring and debugging of the distributed sensors without requiring physical access. <br/><br />
       
       What's in progress: <br/>
-      - Creating another wireless module to put in oe of our temp/pressure controlled glove boxes to remotely monitor.<br />
+      - Creating another wireless module to put in one of our temp/pressure controlled glove boxes to remotely monitor.<br />
       - Making a dashboard that monitors devices in our internal network to see if they are reachable via the ping command.`,
     videoUrl: "https://drexel0-my.sharepoint.com/:v:/g/personal/jsg362_drexel_edu/EfoQvzO4QaVJqtR7seUQn5QB67XQBDesPGVwObfdDqZZsg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=ZlYUoi",
     githubUrl: "https://drexel0-my.sharepoint.com/:f:/g/personal/jsg362_drexel_edu/EvxR04iiKlJLpJWCrHgxP54BWevbfXUArUmA2K9zRnLGOQ?e=eQ3qnX",
