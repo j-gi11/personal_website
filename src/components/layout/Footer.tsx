@@ -4,17 +4,17 @@ import { motion } from "framer-motion";
 const socialLinks = [
   {
     name: "GitHub",
-    href: "https://github.com/yourusername",
+    href: "https://github.com/j-gi11",
     icon: Github,
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/yourusername",
+    href: "https://www.linkedin.com/in/jagroop--gill/",
     icon: Linkedin,
   },
   {
     name: "Email",
-    href: "mailto:your.email@example.com",
+    href: "mailto:jsg362@drexel.edu",
     icon: Mail,
   },
 ];

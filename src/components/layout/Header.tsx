@@ -54,14 +54,25 @@ export default function Header() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    console.log("Scrolling to:", href); // Debug log
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      // Close mobile menu after navigation
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        ) || window.innerWidth <= 768;
+
+      if (isMobile) {
+        const elementRect = element.getBoundingClientRect();
+        const elementTop = elementRect.top + window.pageYOffset - 80;
+        window.scrollTo({
+          top: elementTop,
+          behavior: "smooth",
+        });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+
       setIsMobileMenuOpen(false);
-    } else {
-      console.log("Element not found:", href); // Debug log
     }
   };
 
@@ -146,7 +157,6 @@ export default function Header() {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log("Button clicked:", item.name); // Debug log
                         scrollToSection(item.href);
                       }}
                       className={`text-center text-xl font-medium transition-all duration-200 hover:text-primary cursor-pointer relative px-4 py-2 rounded-md hover:bg-muted/50 ${
