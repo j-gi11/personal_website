@@ -131,7 +131,7 @@ export default function Resume() {
             className="text-center mb-12"
           >
             <Button size="lg" className="text-base px-8 py-3" asChild>
-              <a href="/personal_website/resume.pdf" target="_blank">
+              <a href="/personal_website/Jagroop_Gill_Resume.pdf" target="_blank">
                 <Download className="mr-2 h-5 w-5" />
                 Download Resume (PDF)
               </a>
